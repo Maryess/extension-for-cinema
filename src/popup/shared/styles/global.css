@@ -1,0 +1,33 @@
+/* styles/global.css */
+.cinema-extension-wrapper,
+.cinema-extension-wrapper * {
+  box-sizing: border-box;
+}
+
+.cinema-extension-wrapper input {
+  background: transparent;
+}
+
+/* Автозаполнение для Chrome */
+.cinema-extension-wrapper input:-webkit-autofill,
+.cinema-extension-wrapper input:-webkit-autofill:hover,
+.cinema-extension-wrapper input:-webkit-autofill:focus,
+.cinema-extension-wrapper input:-webkit-autofill:active {
+  /* -webkit-box-shadow: 0 0 0px 1000px var(--input) inset !important;
+  -webkit-text-fill-color: var(--text-border) !important; */
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+#app {
+  all: initial;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  height: 400px;
+  z-index: 2147483647; /* Максимальный z-index */
+  background-color: red;
+  overflow: hidden;
+  display: block;
+  transition: all ease-in-out 0.3s, color ease-in-out 0.3s;
+}
