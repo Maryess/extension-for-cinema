@@ -1,5 +1,11 @@
+import { SettingsWrapper } from "widgets/SettingsWrapper";
+
 const App = () => {
-  return <div>App</div>;
+  return (
+    <div className="w-full h-full p-2">
+      <SettingsWrapper />
+    </div>
+  );
 };
 
 export default App;

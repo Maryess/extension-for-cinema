@@ -9,6 +9,14 @@
   "background": {
     "service_worker": "background.js"
   },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost:4201/*"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
   "permissions": [
     "tabs",
     "declarativeNetRequest",
@@ -17,11 +25,11 @@
     "scripting",
     "activeTab"
   ],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": ["http://localhost:4201/*"],
   "web_accessible_resources": [
     {
       "resources": ["content.js"],
-      "matches": ["<all_urls>"]
+      "matches": ["http://localhost:4201/*"]
     }
   ]
 }

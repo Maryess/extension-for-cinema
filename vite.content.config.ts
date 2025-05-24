@@ -4,6 +4,8 @@ import path, { resolve } from "path";
 import eslint from "vite-plugin-eslint";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineConfig({
   root: "src",
   build: {
@@ -24,6 +26,7 @@ export default defineConfig({
     viteStaticCopy({
       targets: [{ src: resolve(__dirname, "src/manifest.json"), dest: "./" }],
     }),
+    tailwindcss(),
   ],
   resolve: {
     alias: {

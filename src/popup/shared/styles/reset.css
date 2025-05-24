@@ -1,0 +1,59 @@
+:where(.cinema-extension-wrapper) {
+  all: initial;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  color: inherit;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  z-index: 2147483647;
+}
+
+:where(.cinema-extension-wrapper *),
+:where(.cinema-extension-wrapper *::before),
+:where(.cinema-extension-wrapper *::after) {
+  all: unset;
+  box-sizing: border-box;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+:where(.cinema-extension-wrapper input),
+:where(.cinema-extension-wrapper button),
+:where(.cinema-extension-wrapper textarea),
+:where(.cinema-extension-wrapper select) {
+  appearance: none;
+  background: transparent;
+}
+
+:where(.cinema-extension-wrapper input:-webkit-autofill),
+:where(.cinema-extension-wrapper input:-webkit-autofill:hover),
+:where(.cinema-extension-wrapper input:-webkit-autofill:focus) {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+:where(.cinema-extension-wrapper img) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* scrollbars */
+:where(.cinema-extension-wrapper) {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb, #999) transparent;
+}
+
+:where(.cinema-extension-wrapper)::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+:where(.cinema-extension-wrapper)::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb, #999);
+  border-radius: 3px;
+}

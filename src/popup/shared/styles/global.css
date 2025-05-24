@@ -1,4 +1,17 @@
-/* styles/global.css */
+@import "tailwindcss";
+@import "./tailwind.css";
+
+:root {
+  --color-backgroundLight: #f4f0f2;
+  --color-backgroundDark: #121212;
+  --color-buttonLight: #007bff;
+  --color-buttonDark: #ff9800;
+  --color-inputSelectLight: #e8e8e8;
+  --color-inputSelectDark: #f0f0f0;
+  --color-textLight: #222222;
+  --color-textDark: #e0e0e0;
+}
+
 .cinema-extension-wrapper,
 .cinema-extension-wrapper * {
   box-sizing: border-box;
@@ -18,16 +31,40 @@
   transition: background-color 5000s ease-in-out 0s;
 }
 
+html,
+body,
 #app {
-  all: initial;
+  height: 100%;
+}
+
+@keyframes expandDown {
+  0% {
+    transform: translateY(-20%) scaleY(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scaleY(1);
+    opacity: 1;
+  }
+}
+
+#app {
+  animation: expandDown 0.4s ease-out forwards;
   position: fixed;
   top: 0;
   right: 0;
-  width: 380px;
+  width: 350px;
   height: 400px;
-  z-index: 2147483647; /* Максимальный z-index */
-  background-color: red;
+  z-index: 2147483647;
+  background-color: var(--color-backgroundLight);
+  color: var(--color-textLight);
   overflow: hidden;
   display: block;
   transition: all ease-in-out 0.3s, color ease-in-out 0.3s;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.test-bg {
+  background-color: red;
 }
