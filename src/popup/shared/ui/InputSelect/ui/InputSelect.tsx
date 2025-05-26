@@ -8,7 +8,6 @@ interface ISelectInput {
   value?: string;
   onChange?: (value: string) => void;
 }
-
 export const InputSelect = ({ options, value, onChange }: ISelectInput) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (onChange) {

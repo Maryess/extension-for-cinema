@@ -53,7 +53,7 @@ body,
   position: fixed;
   top: 0;
   right: 0;
-  width: 350px;
+  width: 380px;
   height: 400px;
   z-index: 2147483647;
   background-color: var(--color-backgroundLight);

@@ -13,15 +13,14 @@ if (!window.location.href.startsWith(ALLOWED_URL)) {
       if (video) {
         callback(video);
       } else {
-        setTimeout(check, 500); // проверка каждые 500 мс
+        setTimeout(check, 500);
       }
     };
     check();
   }
 
-  waitForVideoElement((video) => {
+  waitForVideoElement(() => {
     console.log("Видео найдено!");
-    video.playbackRate = 4.0;
   });
 
   if (container) {
