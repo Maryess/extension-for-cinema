@@ -12,11 +12,6 @@ export const VideoPlayer = () => {
   useEffect(() => {
     console.log("[SubtitleToggler] SubtitleToggler mounted");
 
-    getFromChromeStorage<boolean>("showSubtitle").then((enabled) => {
-      console.log("[SubtitleToggler] From storage:", enabled);
-      manager.addSubtitle(Boolean(enabled), String(slug));
-    });
-
     getFromChromeStorage<boolean>("pictureInPicture").then((enabled) => {
       console.log("[PictureInPicture] From storage:", enabled);
       manager.pictureInPicture(Boolean(enabled));
@@ -27,13 +22,6 @@ export const VideoPlayer = () => {
       manager.slowPlayback(Boolean(enabled));
     });
 
-    const unsubscribeSub = onChangedChromeStorage<boolean>(
-      "showSubtitle",
-      (newValue) => {
-        console.log("[SubtitleToggler] Changed:", newValue);
-        manager.addSubtitle(Boolean(newValue), String(slug));
-      }
-    );
     const unsubscribePic = onChangedChromeStorage<boolean>(
       "pictureInPicture",
       (newValue) => {
@@ -50,11 +38,10 @@ export const VideoPlayer = () => {
     );
 
     return () => {
-      unsubscribeSub();
       unsubscribePic();
       unsubscribeMode();
     };
-  }, [manager]);
+  }, [manager, slug]);
 
   return null;
 };

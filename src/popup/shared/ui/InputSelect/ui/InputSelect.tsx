@@ -8,25 +8,26 @@ interface ISelectInput {
   value?: string;
   onChange?: (value: string) => void;
 }
+
 export const InputSelect = ({ options, value, onChange }: ISelectInput) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (onChange) {
-      onChange(e.target.value);
-    }
+    onChange?.(e.target.value);
   };
 
   return (
-    <select
-      value={value}
-      onChange={handleChange}
-      className="bg-light-500 w-full h-8 px-4 outline-none border-none text-sm"
-    >
-      <option value="">Choose language</option>
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.title}
-        </option>
-      ))}
-    </select>
+    <div className="w-full">
+      <select
+        value={value}
+        onChange={handleChange}
+        className="w-full h-10 px-4 text-sm rounded-lg bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+      >
+        <option value="">Choose language</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.title}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };

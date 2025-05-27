@@ -11,7 +11,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://localhost:4201/*"],
+      "matches": ["http://localhost:4201/movie/*"],
       "js": ["content.js"],
       "run_at": "document_end",
       "all_frames": true
@@ -28,8 +28,8 @@
   "host_permissions": ["http://localhost:4201/*"],
   "web_accessible_resources": [
     {
-      "resources": ["content.js"],
-      "matches": ["http://localhost:4201/*"]
+      "resources": ["content.js", "assets/gears-spinner.svg"],
+      "matches": ["<all_urls>"]
     }
   ]
 }

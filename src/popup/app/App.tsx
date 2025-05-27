@@ -1,11 +1,9 @@
-import { VideoPlayer } from "entities/VideoPlayer";
-import { SettingsWrapper } from "widgets/SettingsWrapper";
+import { Settings } from "pages/Settings";
 
 const App = () => {
   return (
     <div className="w-full h-full p-2 text-sm">
-      <SettingsWrapper />
-      <VideoPlayer />
+      <Settings />
     </div>
   );
 };

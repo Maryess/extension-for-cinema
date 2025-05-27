@@ -5,15 +5,21 @@ export class VideoPlayerManager {
     this.video = document.querySelector("video");
   }
 
-  private waitForVideo(): Promise<HTMLVideoElement> {
-    return new Promise((resolve) => {
-      const existing = document.querySelector("video");
-      if (existing) return resolve(existing);
+  private async ensureVideo(): Promise<HTMLVideoElement> {
+    if (this.video) return this.video;
 
+    const existing = document.querySelector("video");
+    if (existing) {
+      this.video = existing;
+      return existing;
+    }
+
+    return new Promise((resolve) => {
       const observer = new MutationObserver(() => {
         const video = document.querySelector("video");
         if (video) {
           observer.disconnect();
+          this.video = video;
           resolve(video);
         }
       });
@@ -21,44 +27,103 @@ export class VideoPlayerManager {
       observer.observe(document.body, { childList: true, subtree: true });
     });
   }
+  public addTrack(lang: string, src: string, label: string) {
+    if (!this.video) return;
 
-  public addSubtitle(toggleState: boolean, subtitlePath: string) {
-    if (!this.video) {
-      this.video = document.querySelector("video");
-      if (!this.video) {
-        console.warn("Video not found");
-        return;
-      }
+    const existing = this.video.querySelector(
+      `track[data-managed][data-lang="${lang}"]`
+    );
+    if (existing) {
+      console.log(`Subtitles (${lang}) already ON`);
+      return;
     }
 
-    const existingTrack = this.video.querySelector("track[data-managed]");
+    const track = document.createElement("track");
+    track.kind = "subtitles";
+    track.label = label;
+    track.srclang = lang;
+    track.src = `/translated/${src}`;
+    track.default = true;
+    track.setAttribute("data-managed", "true");
+    track.setAttribute("data-lang", lang);
+
+    this.video.appendChild(track);
+  }
+
+  public async toggleSubtitleByLang(
+    toggleState: boolean,
+    lang: string,
+    subtitlePath: string
+  ) {
+    const video = await this.ensureVideo();
+
+    if (!video) {
+      console.warn("Video not found");
+      return;
+    }
+
+    this.video = video;
+
+    const langSuffix = lang === "en" ? "" : `.${lang}`;
+    const label = `${lang.charAt(0).toUpperCase() + lang.slice(1)} Subtitles`;
 
     if (toggleState) {
-      if (existingTrack) {
-        console.log("Subtitles already ON");
-        return;
-      }
-
-      const track = document.createElement("track");
-      track.kind = "subtitles";
-      track.label = "Subtitles";
-      track.srclang = "en";
-      track.src = `/uploads/movies/${subtitlePath}.vtt`;
-      track.default = true;
-      track.setAttribute("data-managed", "true");
-
-      this.video.appendChild(track);
+      this.addTrack(lang, `${subtitlePath}${langSuffix}.vtt`, label);
     } else {
-      if (!existingTrack) {
-        console.log("Subtitles already OFF");
-        return;
-      }
-      existingTrack.remove();
+      this.removeTrackByLang(lang);
+      console.log(`${label} OFF`);
     }
   }
-  public async pictureInPicture(toggleState: boolean) {
-    const video = this.video || (await this.waitForVideo());
+
+  public async removeTrackByLang(lang: string) {
+    await this.ensureVideo();
+
+    if (!this.video) return;
+
+    const track = this.video.querySelector(
+      `track[data-managed][data-lang="${lang}"]`
+    );
+    if (track) track.remove();
+  }
+
+  public async addSubtitle(toggleState: boolean, subtitlePath: string) {
+    const video = await this.ensureVideo();
+
+    if (!video) {
+      console.warn("Video not found");
+      return;
+    }
+
     this.video = video;
+
+    if (toggleState) {
+      this.addTrack("en", `${subtitlePath}.vtt`, "English Subtitles");
+    } else {
+      this.removeTrackByLang("en");
+      console.log("English subtitles OFF");
+    }
+  }
+
+  public async showRussianSubtitle(toggleState: boolean, subtitlePath: string) {
+    const video = await this.ensureVideo();
+
+    if (!video) {
+      console.warn("Video not found");
+      return;
+    }
+
+    this.video = video;
+
+    if (toggleState) {
+      this.addTrack("ru", `${subtitlePath}.ru.vtt`, "Russian Subtitles");
+    } else {
+      this.removeTrackByLang("ru");
+      console.log("Russian subtitles OFF");
+    }
+  }
+
+  public async pictureInPicture(toggleState: boolean) {
+    const video = await this.ensureVideo();
 
     try {
       if (toggleState) {
@@ -72,12 +137,7 @@ export class VideoPlayerManager {
   }
 
   public async slowPlayback(toggleState: boolean) {
-    const video = this.video || (await this.waitForVideo());
-    this.video = video;
-    try {
-      video.playbackRate = toggleState ? 0.5 : 1.0;
-    } catch (err) {
-      console.error("[SlowPlayback] Error:", err);
-    }
+    const video = await this.ensureVideo();
+    video.playbackRate = toggleState ? 0.5 : 1.0;
   }
 }

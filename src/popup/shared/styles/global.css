@@ -53,13 +53,14 @@ body,
   position: fixed;
   top: 0;
   right: 0;
-  width: 380px;
-  height: 400px;
+  width: 300px;
+  height: 500px;
   z-index: 2147483647;
   background-color: var(--color-backgroundLight);
   color: var(--color-textLight);
   overflow: hidden;
   display: block;
+  font-size: 14px;
   transition: all ease-in-out 0.3s, color ease-in-out 0.3s;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
