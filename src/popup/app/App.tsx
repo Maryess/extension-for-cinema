@@ -1,5 +1,5 @@
 import { Settings } from "pages/Settings";
-import { VideoPlayerProvider } from "./providers/VideoPlayerProvider/VideoPlayerProvider";
+import { VideoPlayerProvider } from "./providers";
 
 const App = () => {
   return (
