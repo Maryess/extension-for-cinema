@@ -1,10 +1,15 @@
 import { ToggleBtn } from "shared/ui/ToggleBtn";
-import { IToggleItem } from "../types";
 
-export const ToggleItem = ({ title, item }: IToggleItem) => {
+type Props = {
+  title: string;
+  isOn: boolean;
+  onToggle: () => void;
+};
+
+export const ToggleItem = ({ title, isOn, onToggle }: Props) => {
   return (
     <div className="flex gap-2 w-full">
-      <ToggleBtn onClick={item.func} isOn={item.isOn} />
+      <ToggleBtn isOn={isOn} onClick={onToggle} />
       <span className="text-dark-400">{title}</span>
     </div>
   );

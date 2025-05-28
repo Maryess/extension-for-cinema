@@ -61,7 +61,6 @@ body,
   overflow: hidden;
   display: block;
   font-size: 14px;
-  transition: all ease-in-out 0.3s, color ease-in-out 0.3s;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
 }

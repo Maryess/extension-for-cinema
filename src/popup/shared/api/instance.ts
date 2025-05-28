@@ -1,10 +1,23 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
-export const SERVER_URL = "http://localhost:4200/api";
+const baseURL = "http://localhost:4200/api";
+if (!baseURL) {
+  throw new Error("SERVER_URL is not working");
+}
 
-export const axiosInstance = axios.create({
-  baseURL: SERVER_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+const axiosInstance: AxiosInstance = axios.create({
+  baseURL: baseURL,
+  timeout: 120000,
 });
+
+axiosInstance.interceptors.request.use((config) => {
+  if (config.data instanceof FormData) {
+    config.headers["Content-Type"] = "multipart/form-data";
+  } else if (config.data) {
+    config.headers["Content-Type"] = "application/json";
+  }
+
+  return config;
+});
+
+export { axiosInstance };

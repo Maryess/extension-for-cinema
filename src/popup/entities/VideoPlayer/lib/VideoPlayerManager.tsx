@@ -1,3 +1,5 @@
+import { createSubtitleTrack } from "./createSubtitleTrack";
+
 export class VideoPlayerManager {
   private video: HTMLVideoElement | null = null;
 
@@ -38,16 +40,7 @@ export class VideoPlayerManager {
       return;
     }
 
-    const track = document.createElement("track");
-    track.kind = "subtitles";
-    track.label = label;
-    track.srclang = lang;
-    track.src = `/translated/${src}`;
-    track.default = true;
-    track.setAttribute("data-managed", "true");
-    track.setAttribute("data-lang", lang);
-
-    this.video.appendChild(track);
+    this.video.appendChild(createSubtitleTrack(lang, src, label));
   }
 
   public async toggleSubtitleByLang(
@@ -104,40 +97,19 @@ export class VideoPlayerManager {
     }
   }
 
-  public async showRussianSubtitle(toggleState: boolean, subtitlePath: string) {
-    const video = await this.ensureVideo();
-
-    if (!video) {
-      console.warn("Video not found");
-      return;
-    }
-
-    this.video = video;
-
-    if (toggleState) {
-      this.addTrack("ru", `${subtitlePath}.ru.vtt`, "Russian Subtitles");
-    } else {
-      this.removeTrackByLang("ru");
-      console.log("Russian subtitles OFF");
-    }
-  }
-
   public async pictureInPicture(toggleState: boolean) {
     const video = await this.ensureVideo();
 
     try {
       if (toggleState) {
-        await video.requestPictureInPicture();
+        if (!document.pictureInPictureElement) {
+          await video.requestPictureInPicture();
+        }
       } else if (document.pictureInPictureElement) {
         await document.exitPictureInPicture();
       }
     } catch (err) {
       console.error("[PiP] Error:", err);
     }
-  }
-
-  public async slowPlayback(toggleState: boolean) {
-    const video = await this.ensureVideo();
-    video.playbackRate = toggleState ? 0.5 : 1.0;
   }
 }

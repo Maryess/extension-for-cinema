@@ -1,10 +1,13 @@
 import { Settings } from "pages/Settings";
+import { VideoPlayerProvider } from "./providers/VideoPlayerProvider/VideoPlayerProvider";
 
 const App = () => {
   return (
-    <div className="w-full h-full p-2 text-sm">
-      <Settings />
-    </div>
+    <VideoPlayerProvider>
+      <div className="w-full h-full p-2 text-sm">
+        <Settings />
+      </div>
+    </VideoPlayerProvider>
   );
 };
 
