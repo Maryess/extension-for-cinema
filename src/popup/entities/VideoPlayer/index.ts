@@ -1,1 +1,1 @@
-export { VideoPlayer } from "./ui/VideoPlayer";
+export { VideoPlayerManager } from "./lib/VideoPlayerManager";

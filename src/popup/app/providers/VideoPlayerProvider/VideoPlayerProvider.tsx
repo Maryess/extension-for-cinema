@@ -1,4 +1,3 @@
-import { VideoPlayerManager } from "entities/VideoPlayer/lib/VideoPlayerManager";
 import { useEffect, useState } from "react";
 
 import {
@@ -6,6 +5,7 @@ import {
   onChangedChromeStorage,
 } from "shared/lib/helpers/chromeStorage";
 import { VideoPlayerContext } from "./context";
+import { VideoPlayerManager } from "entities/VideoPlayer";
 
 export const VideoPlayerProvider = ({
   children,
